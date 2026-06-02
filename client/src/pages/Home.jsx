@@ -405,15 +405,13 @@ function ItemsModal({ link, onClose }) {
 function BackTop() {
   const [show, setShow] = useState(false);
   useEffect(() => {
-    const el = document.querySelector('.content');
-    if (!el) return;
-    const onScroll = () => setShow(el.scrollTop > 300);
-    el.addEventListener('scroll', onScroll);
-    return () => el.removeEventListener('scroll', onScroll);
+    const onScroll = () => setShow(window.scrollY > 300);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
   if (!show) return null;
   return (
-    <button className="back-top" onClick={() => document.querySelector('.content')?.scrollTo({ top: 0, behavior: 'smooth' })} title="回到顶部">
+    <button className="back-top" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} title="回到顶部">
       ↑
     </button>
   );
